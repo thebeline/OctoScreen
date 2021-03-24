@@ -26,7 +26,7 @@ var (
 )
 
 func main() {
-	utils.Logger.Debug("OctoScreen - entering main.main()")
+	utils.Log.ger.Debug("OctoScreen - entering main.main()")
 
 	gtk.Init(nil)
 	settings, _ := gtk.SettingsGetDefault()
