@@ -22,8 +22,6 @@ jobs:
           GOPATH=$(go env GOPATH)
           mkdir -p $GOPATH/src/github.com/Z-Bolt/OctoScreen
           cp -r ./* $GOPATH/src/github.com/Z-Bolt/OctoScreen
-          cd $GOPATH/src/github.com/Z-Bolt/OctoScreen
-          ls -la
         shell: bash
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v2
