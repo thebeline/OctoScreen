@@ -1,16 +1,20 @@
 name: golangci-lint
 on:
   push:
+    paths:
+      - '**.go'
     tags:
       - v*
     branches:
       - master
       - development
   pull_request:
+    paths:
+      - '**.go'
 jobs:
   golangci:
     name: lint
-    runs-on: debian-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: golangci-lint
