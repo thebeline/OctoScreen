@@ -18,7 +18,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: whereami
-        run: go mod init github.com/Z-Bolt/OctoScreen
+        run: |
+          GOPATH=$(go env GOPATH)
+          mkdir -p $GOPATH/src/github.com/Z-Bolt/OctoScreen
+          cp -r ./* $GOPATH/src/github.com/Z-Bolt/OctoScreen
+          cd $GOPATH/src/github.com/Z-Bolt/OctoScreen
+          ls -la
         shell: bash
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v2
