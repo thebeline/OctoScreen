@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: whereami
-        run: echo $(go env GOPATH)
+        run: go mod init
         shell: bash
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v2
