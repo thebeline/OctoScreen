@@ -10,7 +10,7 @@ on:
 jobs:
   golangci:
     name: lint
-    runs-on: ubuntu-latest
+    runs-on: debian-latest
     steps:
       - uses: actions/checkout@v2
       - name: golangci-lint
@@ -20,7 +20,7 @@ jobs:
           version: v1.29
 
           # Optional: working directory, useful for monorepos
-          working-directory: /
+          # working-directory: somedir
 
           # Optional: golangci-lint command line arguments.
           # args: --issues-exit-code=0
