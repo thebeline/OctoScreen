@@ -22,6 +22,7 @@ jobs:
           GOPATH=$(go env GOPATH)
           mkdir -p $GOPATH/src/github.com/Z-Bolt/OctoScreen
           cp -r ./* $GOPATH/src/github.com/Z-Bolt/OctoScreen
+          export GOMODCACHE=$(pwd)/pkg/mod
         shell: bash
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v2
