@@ -309,7 +309,7 @@ linters-settings:
 
 linters:
   enable:
-#    - dogsled
+    - dogsled
     - dupl
 #    - errcheck
 #    - exhaustive
@@ -319,25 +319,25 @@ linters:
     - nestif
 #    - goconst
 #    - gocritic
-#    - cyclop
+    - cyclop
 #    - godot
-#    - godox
+    - godox
 #    - goimports
-#    - golint
-#    - gomnd
+    - golint
+    - gomnd
     - govet
     - ifshort
     - lll
     - misspell
     - nakedret
 #    - predeclared
-#    - nolintlint
+    - nolintlint
 #    - unparam
 ##    - unused
-#    - whitespace
-#    - wsl
-#    - gofumpt
-#    - errorlint
+    - whitespace
+    - wsl
+    - gofumpt
+    - errorlint
 ##    - makezero
   disable-all: true
 #  disable:
