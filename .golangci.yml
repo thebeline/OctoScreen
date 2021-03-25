@@ -309,7 +309,7 @@ linters-settings:
 
 linters:
   enable:
-    - dogsled
+#    - dogsled
 ##    - dupl
 #    - errcheck
 #    - exhaustive
