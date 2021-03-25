@@ -19,6 +19,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: golang-mod-init
         run: [[ -f ./go.mod ]] || go mod init github.com/Z-Bolt/OctoScreen
+        shell: bash
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v2
         with:
