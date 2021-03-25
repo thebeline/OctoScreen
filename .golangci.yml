@@ -329,7 +329,7 @@ linters:
     - golint
     - gomnd
     - govet
-    - ifshort
+#    - ifshort
     - lll
     - misspell
     - nakedret
