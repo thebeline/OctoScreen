@@ -315,8 +315,8 @@ linters:
 #    - exhaustive
 #    - funlen
 #    - gci
-#    - gocognit
-#    - nestif
+    - gocognit
+    - nestif
 #    - goconst
 #    - gocritic
 #    - cyclop
@@ -328,7 +328,7 @@ linters:
 #    - govet
 #    - ifshort
     - lll
-#    - misspell
+    - misspell
 #    - nakedret
 #    - predeclared
 #    - nolintlint
