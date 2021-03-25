@@ -327,7 +327,7 @@ linters:
 #    - gomnd
 #    - govet
 #    - ifshort
-#    - lll
+    - lll
 #    - misspell
 #    - nakedret
 #    - predeclared
