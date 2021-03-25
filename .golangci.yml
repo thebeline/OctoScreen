@@ -326,7 +326,7 @@ linters:
     - lll
     - misspell
     - nakedret
-    - predeclared
+#    - predeclared
     - nolintlint
     - unparam
     - unused
