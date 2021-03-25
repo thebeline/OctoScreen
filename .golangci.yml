@@ -322,7 +322,7 @@ linters:
     - nestif
     - goconst
     - gocritic
-    - cyclop
+#    - cyclop
     - godot
     - godox
     - goimports
