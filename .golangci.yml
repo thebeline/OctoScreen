@@ -75,11 +75,11 @@ linters-settings:
   funlen:
     lines: 60
     statements: 40
-##  gci:
-##    # put imports beginning with prefix after 3rd-party packages;
-##    # only support one prefix
-##    # if not set, use goimports.local-prefixes # which we do
-###    local-prefixes: github.com/Z-Bolt/OctoScreen
+  gci:
+    # put imports beginning with prefix after 3rd-party packages;
+    # only support one prefix
+    # if not set, use goimports.local-prefixes # which we do
+#    local-prefixes: github.com/Z-Bolt/OctoScreen
   gocognit:
     # minimal code complexity to report, 30 by default (but we recommend 10-20)
     min-complexity: 10
@@ -141,13 +141,13 @@ linters-settings:
 #        unnamedResult:
 #        # whether to check exported functions
 #        checkExported: true
-##  cyclop:
-##    # the maximal code complexity to report
-##    max-complexity: 10
-##    # the maximal average package complexity. If it's higher than 0.0 (float) the check is enabled (default 0.0)
-##    package-average: 0.0
-##    # should ignore tests (default false)
-##    skip-tests: false
+  cyclop:
+    # the maximal code complexity to report
+    max-complexity: 10
+    # the maximal average package complexity. If it's higher than 0.0 (float) the check is enabled (default 0.0)
+    package-average: 0.0
+    # should ignore tests (default false)
+    skip-tests: false
   godot:
     # comments to be checked: `declarations`, `toplevel`, or `all`
     scope: declarations
@@ -203,12 +203,12 @@ linters-settings:
 #    disable:
 #      - shadow
 #    disable-all: false
-##  ifshort:
-##    # Maximum length of variable declaration measured in number of lines, after which linter won't suggest using short syntax.
-##    # Has higher priority than max-decl-chars.
-##    max-decl-lines: 1
-##    # Maximum length of variable declaration measured in number of characters, after which linter won't suggest using short syntax.
-##    max-decl-chars: 30
+  ifshort:
+    # Maximum length of variable declaration measured in number of lines, after which linter won't suggest using short syntax.
+    # Has higher priority than max-decl-chars.
+    max-decl-lines: 1
+    # Maximum length of variable declaration measured in number of characters, after which linter won't suggest using short syntax.
+    max-decl-chars: 30
   lll:
     # max line length, lines longer will be reported. Default is 120.
     # '\t' is counted as 1 character by default, and can be changed with the tab-width option
@@ -310,23 +310,23 @@ linters:
     - errcheck
     - exhaustive
     - funlen
-#    - gci
+    - gci
     - gocognit
     - nestif
     - goconst
     - gocritic
-#    - cyclop
+    - cyclop
     - godot
     - godox
     - goimports
     - golint
     - gomnd
     - govet
-#    - ifshort
+    - ifshort
     - lll
     - misspell
     - nakedret
-#    - predeclared
+    - predeclared
     - nolintlint
     - unparam
     - unused
@@ -371,10 +371,10 @@ issues:
 #        - staticcheck
 #      text: "SA9003:"
 
-#    # Exclude lll issues for long lines with go:generate
-#    - linters:
-#        - lll
-#      source: "^//go:generate "
+    # Exclude lll issues for long lines with go:generate
+    - linters:
+        - lll
+      source: "^//go:generate "
 
   # Independently from option `exclude` we use default exclude patterns,
   # it can be disabled by this option. To list all
@@ -433,7 +433,7 @@ severity:
   # issues. Severity rules have the same filtering capability as exclude rules except you
   # are allowed to specify one matcher per severity rule.
   # Only affects out formats that support setting severity information.
-#  rules:
-#    - linters:
-#      - dupl
-#      severity: info
+  rules:
+    - linters:
+      - dupl
+      severity: info
