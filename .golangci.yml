@@ -259,7 +259,11 @@ linters-settings:
     # XXX: if you enable this setting, unused will report a lot of false-positives in text editors:
     # if it's called for subdir of a project it can't find funcs usages. All text editor integrations
     # with golangci-lint call it on a directory with the changed file.
-    check-exported: true
+    #
+    # OctoScreen Note:
+    #   Breaks on GTK3 for some reason
+    #   "failed to load package gtk: could not load export data: no export data for \"github.com/gotk3/gotk3/gtk\""
+    #check-exported: true
   whitespace:
     multi-if: false   # Enforces newlines (or comments) after every multi-line if statement
     multi-func: false # Enforces newlines (or comments) after every multi-line function signature
