@@ -310,7 +310,7 @@ linters-settings:
 linters:
   enable:
     - dogsled
-#    - dupl
+##    - dupl
 #    - errcheck
 #    - exhaustive
     - funlen
@@ -319,7 +319,7 @@ linters:
     - nestif
 #    - goconst
 #    - gocritic
-    - cyclop
+##    - cyclop
 #    - godot
     - godox
 #    - goimports
