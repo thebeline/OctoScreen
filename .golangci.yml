@@ -381,7 +381,7 @@ issues:
   # it can be disabled by this option. To list all
   # excluded by default patterns execute `golangci-lint run --help`.
   # Default value for this option is true.
-  exclude-use-default: false
+  exclude-use-default: true
 
   # The default value is false. If set to true exclude and exclude-rules
   # regular expressions become case sensitive.
@@ -403,7 +403,11 @@ issues:
   # large codebase. It's not practical to fix all existing issues at the moment
   # of integration: much better don't allow issues in new code.
   # Default is false.
-  new: false
+  #
+  # OctoScreen Note:
+  #   We set this to TRUE so you could, in theory, run this from the CLI.
+  #   The GitHub Action will overwrite this and set it to FALSE.
+  new: true
 
   # Show only new issues created after git revision `REV`
 #  new-from-rev: REV
