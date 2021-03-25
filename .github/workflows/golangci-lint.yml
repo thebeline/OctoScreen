@@ -19,7 +19,7 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v2
       - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends build-essential git-buildpackage fakeroot libcairo2-dev libgtk-3-dev git devscripts  
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends build-essential git-buildpackage fakeroot libcairo2-dev libgtk-3-dev git devscripts gccgo  
       - name: GolangCI Lint
         uses: golangci/golangci-lint-action@v2
         with:
