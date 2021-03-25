@@ -333,12 +333,12 @@ linters:
     - predeclared
     - nolintlint
     - unparam
-    - unused
+#    - unused
     - whitespace
     - wsl
     - gofumpt
     - errorlint
-    - makezero
+#    - makezero
   disable-all: false
   disable:
     # Going to try to disable the ones that seem to be throwing errors, for now.
