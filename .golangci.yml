@@ -340,10 +340,10 @@ linters:
 #    - errorlint
 ##    - makezero
   disable-all: true
-  disable:
-    # Going to try to disable the ones that seem to be throwing errors, for now.
-    - unused
-    - makezero
+#  disable:
+#    # Going to try to disable the ones that seem to be throwing errors, for now.
+#    - unused
+#    - makezero
 #  presets:
 #    - bugs
 #    - unused
