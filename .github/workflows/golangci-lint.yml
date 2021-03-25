@@ -1,11 +1,27 @@
 name: golangci-lint
-on: [push, pull_request]
+on:
+  push:
+    paths:
+      - '**.go'
+    tags:
+      - v*
+    branches:
+      - master
+      - development
+  pull_request:
+    paths:
+      - '**.go'
 jobs:
   golangci:
     name: lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: golang-mod-init
+        run: |
+          go mod init github.com/Z-Bolt/OctoScreen
+          true
+        shell: bash
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v2
         with:
