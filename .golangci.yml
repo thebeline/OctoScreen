@@ -23,7 +23,7 @@ run:
   #   we have not edited, or will not edit.
   #skip-dirs:
   #  - vendor
-  
+
   # default is true. Enables skipping of directories:
   #   vendor$, third_party$, testdata$, examples$, Godeps$, builtin$
   #
