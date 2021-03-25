@@ -17,14 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: whereami
-        run: |
-          GOPATH=$(go env GOPATH)
-          mkdir -p $GOPATH/src/github.com/Z-Bolt/OctoScreen
-          cp -r ./* $GOPATH/src/github.com/Z-Bolt/OctoScreen
-          export GOMODCACHE=$(pwd)/pkg/mod
-          go mod init github.com/Z-Bolt/OctoScreen
-        shell: bash
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v2
         with:
@@ -36,6 +28,7 @@ jobs:
 
           # Optional: golangci-lint command line arguments.
           # args: --issues-exit-code=0
+          args: --modules-download-mode=readonly|vendor
 
           # Optional: show only new issues if it's a pull request. The default value is `false`.
           only-new-issues: true
