@@ -263,7 +263,7 @@ linters-settings:
     # OctoScreen Note:
     #   Breaks on GTK3 for some reason
     #   "failed to load package gtk: could not load export data: no export data for \"github.com/gotk3/gotk3/gtk\""
-    #check-exported: true
+    check-exported: true
   whitespace:
     multi-if: false   # Enforces newlines (or comments) after every multi-line if statement
     multi-func: false # Enforces newlines (or comments) after every multi-line function signature
@@ -355,13 +355,10 @@ issues:
 
   # Excluding configuration per-path, per-linter, per-text and per-source
   exclude-rules:
-#    # Exclude some linters from running on tests files.
-#    - path: _test\.go
-#      linters:
-#        - gocyclo
-#        - errcheck
-#        - dupl
-#        - gosec
+    # Exclude some linters from running on tests files.
+    - path: github.com/gotk3
+      linters:
+        - unused
 
 #    # Exclude known linters from partially hard-vendored code,
 #    # which is impossible to exclude via "nolint" comments.
