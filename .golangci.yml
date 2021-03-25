@@ -336,9 +336,9 @@ linters:
     - errorlint
     - makezero
   disable-all: false
-  presets:
-    - bugs
-    - unused
+#  presets:
+#    - bugs
+#    - unused
   fast: false
 
 issues:
