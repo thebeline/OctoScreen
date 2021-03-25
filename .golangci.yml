@@ -349,32 +349,32 @@ issues:
   #exclude:
   #  - abcdef
 
-  # Excluding configuration per-path, per-linter, per-text and per-source
-  exclude-rules:
-    # Exclude some linters from running on tests files.
-    - path: _test\.go
-      linters:
-        - gocyclo
-        - errcheck
-        - dupl
-        - gosec
+#  # Excluding configuration per-path, per-linter, per-text and per-source
+#  exclude-rules:
+#    # Exclude some linters from running on tests files.
+#    - path: _test\.go
+#      linters:
+#        - gocyclo
+#        - errcheck
+#        - dupl
+#        - gosec
 
-    # Exclude known linters from partially hard-vendored code,
-    # which is impossible to exclude via "nolint" comments.
-    - path: internal/hmac/
-      text: "weak cryptographic primitive"
-      linters:
-        - gosec
+#    # Exclude known linters from partially hard-vendored code,
+#    # which is impossible to exclude via "nolint" comments.
+#    - path: internal/hmac/
+#      text: "weak cryptographic primitive"
+#      linters:
+#        - gosec
 
-    # Exclude some staticcheck messages
-    - linters:
-        - staticcheck
-      text: "SA9003:"
+#    # Exclude some staticcheck messages
+#    - linters:
+#        - staticcheck
+#      text: "SA9003:"
 
-    # Exclude lll issues for long lines with go:generate
-    - linters:
-        - lll
-      source: "^//go:generate "
+#    # Exclude lll issues for long lines with go:generate
+#    - linters:
+#        - lll
+#      source: "^//go:generate "
 
   # Independently from option `exclude` we use default exclude patterns,
   # it can be disabled by this option. To list all
@@ -405,13 +405,13 @@ issues:
   new: false
 
   # Show only new issues created after git revision `REV`
-  new-from-rev: REV
+#  new-from-rev: REV
 
   # Show only new issues created in git patch with set file path.
   #new-from-patch: path/to/patch/file
 
   # Fix found issues (if it's supported by the linter)
-  fix: true
+#  fix: true
 
 severity:
   # Default value is empty string.
@@ -433,7 +433,7 @@ severity:
   # issues. Severity rules have the same filtering capability as exclude rules except you
   # are allowed to specify one matcher per severity rule.
   # Only affects out formats that support setting severity information.
-  rules:
-    - linters:
-      - dupl
-      severity: info
+#  rules:
+#    - linters:
+#      - dupl
+#      severity: info
