@@ -253,7 +253,7 @@ linters-settings:
     # XXX: if you enable this setting, unparam will report a lot of false-positives in text editors:
     # if it's called for subdir of a project it can't find external interfaces. All text editor integrations
     # with golangci-lint call it on a directory with the changed file.
-    check-exported: true
+    check-exported: false
   unused:
     # treat code as a program (not a library) and report unused exported identifiers; default is false.
     # XXX: if you enable this setting, unused will report a lot of false-positives in text editors:
@@ -263,7 +263,7 @@ linters-settings:
     # OctoScreen Note:
     #   Breaks on GTK3 for some reason
     #   "failed to load package gtk: could not load export data: no export data for \"github.com/gotk3/gotk3/gtk\""
-    check-exported: true
+    check-exported: false
   whitespace:
     multi-if: false   # Enforces newlines (or comments) after every multi-line if statement
     multi-func: false # Enforces newlines (or comments) after every multi-line function signature
@@ -309,37 +309,37 @@ linters-settings:
 
 linters:
   enable:
-    - dogsled
-    - dupl
-    - errcheck
-    - exhaustive
-    - funlen
-    - gci
-    - gocognit
-    - nestif
-    - goconst
-    - gocritic
-    - cyclop
-    - godot
-    - godox
-    - goimports
-    - golint
-    - gomnd
-    - govet
-    - ifshort
-    - lll
-    - misspell
-    - nakedret
-    - predeclared
-    - nolintlint
-    - unparam
-#    - unused
-    - whitespace
-    - wsl
-    - gofumpt
-    - errorlint
-#    - makezero
-  disable-all: false
+#    - dogsled
+#    - dupl
+#    - errcheck
+#    - exhaustive
+#    - funlen
+#    - gci
+#    - gocognit
+#    - nestif
+#    - goconst
+#    - gocritic
+#    - cyclop
+#    - godot
+#    - godox
+#    - goimports
+#    - golint
+#    - gomnd
+#    - govet
+#    - ifshort
+#    - lll
+#    - misspell
+#    - nakedret
+#    - predeclared
+#    - nolintlint
+#    - unparam
+##    - unused
+#    - whitespace
+#    - wsl
+#    - gofumpt
+#    - errorlint
+##    - makezero
+  disable-all: true
   disable:
     # Going to try to disable the ones that seem to be throwing errors, for now.
     - unused
