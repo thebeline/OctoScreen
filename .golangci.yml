@@ -313,7 +313,7 @@ linters:
 ##    - dupl
 #    - errcheck
 #    - exhaustive
-    - funlen
+##    - funlen
 #    - gci
     - gocognit
     - nestif
