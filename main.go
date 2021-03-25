@@ -29,7 +29,7 @@ func main() {
 	utils.Log.ger.Debusg("OctoScreen - entering main.main()")
 
 	gtk.Init(nil)
-	settings, _ := gtk.SettingsGetDefault()
+	settings, _ := gtk.Setting sGetDefault()
 	settings.SetProperty("gtk-application-prefer-dark-theme", true)
 
 	utils.DumpEnvironmentVariables()
