@@ -29,9 +29,7 @@ jobs:
       - name: Configure GO ENV
         run: |
           go version
-          mkdir -p /home/runner/.config/go/
-          export GOENV=/home/runner/.config/go/env
-          echo "GOFLAGS=-tags=gtk_$(pkg-config --modversion gtk+-3.0 | tr -t . _ | cut -d _ -f 1-2),pango_$(pkg-config --modversion pango | tr -t . _ | cut -d _ -f 1-2),gdk_pixbuf_$(pkg-config --modversion gdk-pixbuf-2.0 | tr -t . _ | cut -d _ -f 1-2),glib_$(pkg-config --modversion glib-2.0 | tr -t . _ | cut -d _ -f 1-2)" > /home/runner/.config/go/env
+          go env -w GOFLAGS=-tags=gtk_$(pkg-config --modversion gtk+-3.0 | tr -t . _ | cut -d _ -f 1-2),pango_$(pkg-config --modversion pango | tr -t . _ | cut -d _ -f 1-2),gdk_pixbuf_$(pkg-config --modversion gdk-pixbuf-2.0 | tr -t . _ | cut -d _ -f 1-2),glib_$(pkg-config --modversion glib-2.0 | tr -t . _ | cut -d _ -f 1-2)
           go env
       - name: GolangCI Lint
         uses: golangci/golangci-lint-action@v2
