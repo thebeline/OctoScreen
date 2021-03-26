@@ -19,7 +19,7 @@ func init() {
 	WrapMap["GtkSettings"] = wrapSettings
 }
 
-// Settings - GTK settings.
+//GtkSettings
 type Settings struct {
 	*glib.Object
 }
@@ -39,10 +39,14 @@ func marshalSettings(p uintptr) (interface{}, error) {
 }
 
 func wrapSettings(obj *glib.Object) *Settings {
+	if obj == nil {
+		return nil
+	}
+
 	return &Settings{obj}
 }
 
-// SettingsGetDefault - get the global non window specific settings
+//Get the global non window specific settings
 func SettingsGetDefault() (*Settings, error) {
 	c := C.gtk_settings_get_default()
 	if c == nil {

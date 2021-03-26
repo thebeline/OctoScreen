@@ -18,9 +18,9 @@
 
 package pango
 
-// #cgo pkg-config: pango
 // #include <pango/pango.h>
 // #include "pango.go.h"
+// #include "fontconfig.go.h"
 import "C"
 import (
 	//	"github.com/andre-hub/gotk3/glib"
@@ -37,6 +37,12 @@ func init() {
 		{glib.Type(C.pango_font_description_get_type()), marshalFontDescription},
 	}
 	glib.RegisterGValueMarshalers(tm)
+}
+
+// AddFont adds the font to the configuration.
+func AddFont(fontPath string) {
+	path := (*C.uchar)(unsafe.Pointer(C.CString(fontPath)))
+	C.addFont(path)
 }
 
 // FontDescription is a representation of PangoFontDescription.
@@ -240,7 +246,15 @@ func (v *FontDescription) GetStyle() Style {
 
 //void                 pango_font_description_set_variant       (PangoFontDescription *desc,
 //							       PangoVariant          variant);
+func (v *FontDescription) SetVariant(variant Variant) {
+	C.pango_font_description_set_variant(v.native(), (C.PangoVariant)(variant))
+}
+
 //PangoVariant         pango_font_description_get_variant       (const PangoFontDescription *desc) G_GNUC_PURE;
+func (v *FontDescription) GetVariant() Variant {
+	c := C.pango_font_description_get_variant(v.native())
+	return Variant(c)
+}
 
 //void                 pango_font_description_set_weight        (PangoFontDescription *desc,
 //							       PangoWeight           weight);

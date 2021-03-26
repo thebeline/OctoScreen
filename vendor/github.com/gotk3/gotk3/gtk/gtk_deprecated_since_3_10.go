@@ -19,11 +19,10 @@
 // 3.8 or earlier.  To target an earlier build build, use the build tag
 // gtk_MAJOR_MINOR.  For example, to target GTK 3.8, run
 // 'go build -tags gtk_3_8'.
-// +build gtk_3_6 gtk_3_8
+// +build gtk_3_6 gtk_3_8 gtk_deprecated
 
 package gtk
 
-// #cgo pkg-config: gtk+-3.0
 // #include <stdlib.h>
 // #include <gtk/gtk.h>
 import "C"
@@ -73,6 +72,26 @@ func (v *Entry) SetIconFromStock(iconPos EntryIconPosition, stockID string) {
 		C.GtkEntryIconPosition(iconPos), (*C.gchar)(cstr))
 }
 
+/*
+ * GtkImage
+ */
+
+// TODO:
+
+/*
+// gtk_image_get_icon_set().
+func (v *Image) GetIconSet() {
+}
+*/
+
+// gtk_image_get_stock().
+
+/*
+// gtk_image_new_from_icon_set().
+func ImageNewFromIconSet() {
+}
+*/
+
 // ImageNewFromStock is a wrapper around gtk_image_new_from_stock().
 func ImageNewFromStock(stock Stock, size IconSize) (*Image, error) {
 	cstr := C.CString(string(stock))
@@ -90,6 +109,44 @@ func (v *Image) SetFromStock(stock Stock, size IconSize) {
 	defer C.free(unsafe.Pointer(cstr))
 	C.gtk_image_set_from_stock(v.native(), (*C.gchar)(cstr),
 		C.GtkIconSize(size))
+}
+
+// TODO:
+/*
+// gtk_image_set_from_icon_set().
+func (v *Image) SetFromIconSet() {
+}
+*/
+
+// StatusIconNewFromStock is a wrapper around gtk_status_icon_new_from_stock().
+// Deprecated since 3.10, use StatusIconNewFromIconName (gtk_status_icon_new_from_icon_name) instead.
+func StatusIconNewFromStock(stockId string) (*StatusIcon, error) {
+	cstr := C.CString(stockId)
+	defer C.free(unsafe.Pointer(cstr))
+	c := C.gtk_status_icon_new_from_file((*C.gchar)(cstr))
+	if c == nil {
+		return nil, nilPtrErr
+	}
+	obj := glib.Take(unsafe.Pointer(c))
+	return wrapStatusIcon(obj), nil
+}
+
+// SetFromStock is a wrapper around gtk_status_icon_set_from_stock()
+// Deprecated since 3.10, use SetFromIconName (gtk_status_icon_set_from_icon_name) instead.
+func (v *StatusIcon) SetFromStock(stockID string) {
+	cstr := C.CString(stockID)
+	defer C.free(unsafe.Pointer(cstr))
+	C.gtk_status_icon_set_from_stock(v.native(), (*C.gchar)(cstr))
+}
+
+// GetStock is a wrapper around gtk_status_icon_get_stock()
+// Deprecated since 3.10, use GetIconName (gtk_status_icon_get_icon_name) instead
+func (v *StatusIcon) GetStock() string {
+	c := C.gtk_status_icon_get_stock(v.native())
+	if c == nil {
+		return ""
+	}
+	return C.GoString((*C.char)(c))
 }
 
 // Stock is a special type that does not have an equivalent type in
@@ -212,3 +269,68 @@ const (
 func (v *Window) ReshowWithInitialSize() {
 	C.gtk_window_reshow_with_initial_size(v.native())
 }
+
+/*
+ * GtkWidget
+ */
+
+// TODO:
+// gtk_widget_render_icon_pixbuf().
+// gtk_widget_pop_composite_child().
+// gtk_widget_push_composite_child().
+// gtk_widget_set_composite_name().
+
+/*
+ * GtkContainer
+ */
+
+// TODO:
+// gtk_container_resize_children().
+
+/*
+ * GtkImageMenuItem
+ */
+
+// TODO:
+// gtk_image_menu_item_set_image().
+// gtk_image_menu_item_get_image().
+// gtk_image_menu_item_new().
+// gtk_image_menu_item_new_from_stock().
+// gtk_image_menu_item_new_with_label().
+// gtk_image_menu_item_new_with_mnemonic().
+// gtk_image_menu_item_get_use_stock().
+// gtk_image_menu_item_set_use_stock().
+// gtk_image_menu_item_get_always_show_image().
+// gtk_image_menu_item_set_always_show_image().
+// gtk_image_menu_item_set_accel_group().
+
+/*
+ * GtkToolButton
+ */
+
+// TODO:
+// gtk_tool_button_new_from_stock().
+// gtk_tool_button_set_stock_id().
+// gtk_tool_button_get_stock_id().
+
+/*
+ * GtkDialog
+ */
+
+// TODO:
+
+/*
+// gtk_dialog_set_alternative_button_order().
+func SetAlternativeButtonOrder(ids ...ResponseType) {
+}
+*/
+
+/*
+// gtk_alternative_dialog_button_order().
+func (v *gdk.Screen) AlternativeDialogButtonOrder() bool {
+	c := C.gtk_alternative_dialog_button_order(v.native())
+	return gobool(c)
+}
+*/
+
+// gtk_dialog_set_alternative_button_order_from_array

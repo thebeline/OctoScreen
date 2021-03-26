@@ -1,6 +1,5 @@
 package cairo
 
-// #cgo pkg-config: cairo cairo-gobject
 // #include <stdlib.h>
 // #include <cairo.h>
 // #include <cairo-gobject.h>
@@ -49,6 +48,11 @@ func WrapContext(p uintptr) *Context {
 	return wrapContext(context)
 }
 
+// Closes the context. The context must not be used afterwards.
+func (v *Context) Close() {
+	v.destroy()
+}
+
 // Create is a wrapper around cairo_create().
 func Create(target *Surface) *Context {
 	c := C.cairo_create(target.native())
@@ -64,7 +68,10 @@ func (v *Context) reference() {
 
 // destroy is a wrapper around cairo_destroy().
 func (v *Context) destroy() {
-	C.cairo_destroy(v.native())
+	if v.context != nil {
+		C.cairo_destroy(v.native())
+		v.context = nil
+	}
 }
 
 // Status is a wrapper around cairo_status().
@@ -103,6 +110,7 @@ func (v *Context) PushGroupWithContent(content Content) {
 }
 
 // TODO(jrick) PopGroup (depends on Pattern)
+// cairo_pop_group
 
 // PopGroupToSource is a wrapper around cairo_pop_group_to_source().
 func (v *Context) PopGroupToSource() {
@@ -118,6 +126,11 @@ func (v *Context) GetGroupTarget() *Surface {
 	return s
 }
 
+// SetSource is a wrapper around cairo_set_source().
+func (v *Context) SetSource(p *Pattern) {
+	C.cairo_set_source(v.native(), p.native())
+}
+
 // SetSourceRGB is a wrapper around cairo_set_source_rgb().
 func (v *Context) SetSourceRGB(red, green, blue float64) {
 	C.cairo_set_source_rgb(v.native(), C.double(red), C.double(green),
@@ -131,6 +144,7 @@ func (v *Context) SetSourceRGBA(red, green, blue, alpha float64) {
 }
 
 // TODO(jrick) SetSource (depends on Pattern)
+// cairo_set_source
 
 // SetSourceSurface is a wrapper around cairo_set_source_surface().
 func (v *Context) SetSourceSurface(surface *Surface, x, y float64) {
@@ -139,6 +153,7 @@ func (v *Context) SetSourceSurface(surface *Surface, x, y float64) {
 }
 
 // TODO(jrick) GetSource (depends on Pattern)
+// cairo_get_source
 
 // SetAntialias is a wrapper around cairo_set_antialias().
 func (v *Context) SetAntialias(antialias Antialias) {
@@ -313,7 +328,8 @@ func (v *Context) MoveTo(x, y float64) {
 	C.cairo_move_to(v.native(), C.double(x), C.double(y))
 }
 
-// TODO(jrick) CopyRectangleList (depends on RectangleList)
+// TODO(jrick) CopyClipRectangleList (depends on RectangleList)
+// cairo_copy_clip_rectangle_list
 
 // Fill is a wrapper around cairo_fill().
 func (v *Context) Fill() {
@@ -355,6 +371,7 @@ func (v *Context) InFill(x, y float64) bool {
 }
 
 // TODO(jrick) Mask (depends on Pattern)
+// cairo_mask_surface
 
 // MaskSurface is a wrapper around cairo_mask_surface().
 func (v *Context) MaskSurface(surface *Surface, surfaceX, surfaceY float64) {

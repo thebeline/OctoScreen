@@ -39,7 +39,7 @@ type IColorChooser interface {
 	toColorChooser() *C.GtkColorChooser
 }
 
-// native returns a pointer to the underlying GtkAppChooser.
+// native returns a pointer to the underlying GtkColorChooser.
 func (v *ColorChooser) native() *C.GtkColorChooser {
 	if v == nil || v.GObject == nil {
 		return nil
@@ -55,6 +55,10 @@ func marshalColorChooser(p uintptr) (interface{}, error) {
 }
 
 func wrapColorChooser(obj *glib.Object) *ColorChooser {
+	if obj == nil {
+		return nil
+	}
+
 	return &ColorChooser{obj}
 }
 
@@ -131,18 +135,36 @@ func marshalColorChooserDialog(p uintptr) (interface{}, error) {
 }
 
 func wrapColorChooserDialog(obj *glib.Object) *ColorChooserDialog {
+	if obj == nil {
+		return nil
+	}
+
 	dialog := wrapDialog(obj)
 	cc := wrapColorChooser(obj)
 	return &ColorChooserDialog{*dialog, *cc}
 }
 
 // ColorChooserDialogNew() is a wrapper around gtk_color_chooser_dialog_new().
-func ColorChooserDialogNew(title string, parent *Window) (*ColorChooserDialog, error) {
+func ColorChooserDialogNew(title string, parent IWindow) (*ColorChooserDialog, error) {
+
 	cstr := C.CString(title)
 	defer C.free(unsafe.Pointer(cstr))
-	c := C.gtk_color_chooser_dialog_new((*C.gchar)(cstr), parent.native())
+
+	var w *C.GtkWindow = nil
+	if parent != nil {
+		w = parent.toWindow()
+	}
+
+	c := C.gtk_color_chooser_dialog_new((*C.gchar)(cstr), w)
 	if c == nil {
 		return nil, nilPtrErr
 	}
 	return wrapColorChooserDialog(glib.Take(unsafe.Pointer(c))), nil
 }
+
+/*
+ * GtkColorChooserWidget
+ */
+
+// TODO:
+// gtk_color_chooser_widget_new().

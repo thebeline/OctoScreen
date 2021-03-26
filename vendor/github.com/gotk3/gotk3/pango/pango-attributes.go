@@ -18,7 +18,6 @@
 
 package pango
 
-// #cgo pkg-config: pango
 // #include <pango/pango.h>
 // #include "pango.go.h"
 import "C"
@@ -104,6 +103,17 @@ func (v *AttrList) Native() uintptr {
 
 func (v *AttrList) native() *C.PangoAttrList {
 	return (*C.PangoAttrList)(unsafe.Pointer(v.pangoAttrList))
+}
+
+func (v *AttrList) Insert(attribute *Attribute) {
+	C.pango_attr_list_insert(v.pangoAttrList, attribute.native())
+}
+
+func AttrListNew() *AttrList {
+	c := C.pango_attr_list_new()
+	attrList := new(AttrList)
+	attrList.pangoAttrList = c
+	return attrList
 }
 
 // AttrType is a representation of Pango's PangoAttrType.

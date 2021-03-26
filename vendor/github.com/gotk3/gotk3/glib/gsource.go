@@ -1,6 +1,5 @@
 package glib
 
-// #cgo pkg-config: glib-2.0 gobject-2.0 gio-2.0
 // #include <gio/gio.h>
 // #include <glib.h>
 // #include <glib-object.h>
@@ -15,6 +14,11 @@ func (v *Source) native() *C.GSource {
 		return nil
 	}
 	return (*C.GSource)(v)
+}
+
+func wrapSource(sourcePtr *C.GSource) *Source {
+	source := Source(*sourcePtr)
+	return &source
 }
 
 // MainCurrentSource is a wrapper around g_main_current_source().

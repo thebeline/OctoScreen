@@ -1,6 +1,5 @@
 package gdk
 
-// #cgo pkg-config: gdk-3.0
 // #include <gdk/gdk.h>
 // #include "gdk.go.h"
 import "C"
@@ -67,7 +66,7 @@ func (v *Screen) GetSystemVisual() (*Visual, error) {
 	return &Visual{glib.Take(unsafe.Pointer(c))}, nil
 }
 
-// ScreenGetDefault is a wrapper aroud gdk_screen_get_default().
+// ScreenGetDefault is a wrapper around gdk_screen_get_default().
 func ScreenGetDefault() (*Screen, error) {
 	return toScreen(C.gdk_screen_get_default())
 }
@@ -104,6 +103,7 @@ func (v *Screen) SetResolution(r float64) {
 	C.gdk_screen_set_resolution(v.native(), C.gdouble(r))
 }
 
+// TODO:
 // void 	gdk_screen_set_font_options ()
 // gboolean 	gdk_screen_get_setting ()
 // const cairo_font_options_t * 	gdk_screen_get_font_options ()

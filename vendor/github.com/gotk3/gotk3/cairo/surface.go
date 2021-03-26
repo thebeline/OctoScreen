@@ -1,19 +1,15 @@
 package cairo
 
-// #cgo pkg-config: cairo cairo-gobject
 // #include <stdlib.h>
 // #include <cairo.h>
 // #include <cairo-gobject.h>
+// #include <cairo-pdf.h>
 import "C"
 
 import (
 	"runtime"
 	"unsafe"
 )
-
-// TODO(jrick) SetUserData (depends on UserDataKey and DestroyFunc)
-
-// TODO(jrick) GetUserData (depends on UserDataKey)
 
 /*
  * cairo_surface_t
@@ -39,6 +35,23 @@ func NewSurfaceFromPNG(fileName string) (*Surface, error) {
 	return &Surface{surfaceNative}, nil
 }
 
+// CreateImageSurfaceForData is a wrapper around cairo_image_surface_create_for_data().
+func CreateImageSurfaceForData(data []byte, format Format, width, height, stride int) (*Surface, error) {
+	surfaceNative := C.cairo_image_surface_create_for_data((*C.uchar)(unsafe.Pointer(&data[0])),
+		C.cairo_format_t(format), C.int(width), C.int(height), C.int(stride))
+
+	status := Status(C.cairo_surface_status(surfaceNative))
+	if status != STATUS_SUCCESS {
+		return nil, ErrorStatus(status)
+	}
+
+	s := wrapSurface(surfaceNative)
+
+	runtime.SetFinalizer(s, (*Surface).destroy)
+
+	return s, nil
+}
+
 // CreateImageSurface is a wrapper around cairo_image_surface_create().
 func CreateImageSurface(format Format, width, height int) *Surface {
 	c := C.cairo_image_surface_create(C.cairo_format_t(format),
@@ -46,6 +59,25 @@ func CreateImageSurface(format Format, width, height int) *Surface {
 	s := wrapSurface(c)
 	runtime.SetFinalizer(s, (*Surface).destroy)
 	return s
+}
+
+/// Create a new PDF surface.
+func CreatePDFSurface(fileName string, width float64, height float64) (*Surface, error) {
+	cstr := C.CString(fileName)
+	defer C.free(unsafe.Pointer(cstr))
+
+	surfaceNative := C.cairo_pdf_surface_create(cstr, C.double(width), C.double(height))
+
+	status := Status(C.cairo_surface_status(surfaceNative))
+	if status != STATUS_SUCCESS {
+		return nil, ErrorStatus(status)
+	}
+
+	s := wrapSurface(surfaceNative)
+
+	runtime.SetFinalizer(s, (*Surface).destroy)
+
+	return s, nil
 }
 
 // native returns a pointer to the underlying cairo_surface_t.
@@ -61,10 +93,13 @@ func (v *Surface) Native() uintptr {
 	return uintptr(unsafe.Pointer(v.native()))
 }
 
+func (v *Surface) GetCSurface() *C.cairo_surface_t {
+	return v.native()
+}
+
 func marshalSurface(p uintptr) (interface{}, error) {
 	c := C.g_value_get_boxed((*C.GValue)(unsafe.Pointer(p)))
-	surface := (*C.cairo_surface_t)(unsafe.Pointer(c))
-	return wrapSurface(surface), nil
+	return WrapSurface(uintptr(c)), nil
 }
 
 func wrapSurface(surface *C.cairo_surface_t) *Surface {
@@ -75,13 +110,22 @@ func wrapSurface(surface *C.cairo_surface_t) *Surface {
 // C cairo_surface_t.  This is primarily designed for use with other
 // gotk3 packages and should be avoided by applications.
 func NewSurface(s uintptr, needsRef bool) *Surface {
-	ptr := (*C.cairo_surface_t)(unsafe.Pointer(s))
-	surface := wrapSurface(ptr)
+	surface := WrapSurface(s)
 	if needsRef {
 		surface.reference()
 	}
 	runtime.SetFinalizer(surface, (*Surface).destroy)
 	return surface
+}
+
+func WrapSurface(s uintptr) *Surface {
+	ptr := (*C.cairo_surface_t)(unsafe.Pointer(s))
+	return wrapSurface(ptr)
+}
+
+// Closes the surface. The surface must not be used afterwards.
+func (v *Surface) Close() {
+	v.destroy()
 }
 
 // CreateSimilar is a wrapper around cairo_surface_create_similar().
@@ -111,7 +155,10 @@ func (v *Surface) reference() {
 
 // destroy is a wrapper around cairo_surface_destroy().
 func (v *Surface) destroy() {
-	C.cairo_surface_destroy(v.native())
+	if v.surface != nil {
+		C.cairo_surface_destroy(v.native())
+		v.surface = nil
+	}
 }
 
 // Status is a wrapper around cairo_surface_status().
@@ -126,10 +173,13 @@ func (v *Surface) Flush() {
 }
 
 // TODO(jrick) GetDevice (requires Device bindings)
+// cairo_surface_get_device
 
 // TODO(jrick) GetFontOptions (require FontOptions bindings)
+// cairo_surface_get_font_options
 
 // TODO(jrick) GetContent (requires Content bindings)
+// cairo_surface_get_content
 
 // MarkDirty is a wrapper around cairo_surface_mark_dirty().
 func (v *Surface) MarkDirty() {
@@ -161,8 +211,7 @@ func (v *Surface) SetFallbackResolution(xPPI, yPPI float64) {
 		C.double(yPPI))
 }
 
-// GetFallbackResolution is a wrapper around
-// cairo_surface_get_fallback_resolution().
+// GetFallbackResolution is a wrapper around cairo_surface_get_fallback_resolution().
 func (v *Surface) GetFallbackResolution() (xPPI, yPPI float64) {
 	var x, y C.double
 	C.cairo_surface_get_fallback_resolution(v.native(), &x, &y)
@@ -176,8 +225,10 @@ func (v *Surface) GetType() SurfaceType {
 }
 
 // TODO(jrick) SetUserData (depends on UserDataKey and DestroyFunc)
+// cairo_surface_set_user_data
 
 // TODO(jrick) GetUserData (depends on UserDataKey)
+// cairo_surface_get_user_data
 
 // CopyPage is a wrapper around cairo_surface_copy_page().
 func (v *Surface) CopyPage() {
@@ -196,6 +247,7 @@ func (v *Surface) HasShowTextGlyphs() bool {
 }
 
 // TODO(jrick) SetMimeData (depends on DestroyFunc)
+// cairo_surface_set_mime_data
 
 // GetMimeData is a wrapper around cairo_surface_get_mime_data().  The
 // returned mimetype data is returned as a Go byte slice.
@@ -208,8 +260,41 @@ func (v *Surface) GetMimeData(mimeType MimeType) []byte {
 	return C.GoBytes(unsafe.Pointer(data), C.int(length))
 }
 
+// WriteToPNG is a wrapper around cairo_surface_write_png(). It writes the Cairo
+// surface to the given file in PNG format.
+func (v *Surface) WriteToPNG(fileName string) error {
+	cstr := C.CString(fileName)
+	defer C.free(unsafe.Pointer(cstr))
+
+	status := Status(C.cairo_surface_write_to_png(v.surface, cstr))
+
+	if status != STATUS_SUCCESS {
+		return ErrorStatus(status)
+	}
+
+	return nil
+}
+
 // TODO(jrick) SupportsMimeType (since 1.12)
+// cairo_surface_supports_mime_type
 
 // TODO(jrick) MapToImage (since 1.12)
+// cairo_surface_map_to_image
 
 // TODO(jrick) UnmapImage (since 1.12)
+// cairo_surface_unmap_image
+
+// GetHeight is a wrapper around cairo_image_surface_get_height().
+func (v *Surface) GetHeight() int {
+	return int(C.cairo_image_surface_get_height(v.surface))
+}
+
+// GetWidth is a wrapper around cairo_image_surface_get_width().
+func (v *Surface) GetWidth() int {
+	return int(C.cairo_image_surface_get_width(v.surface))
+}
+
+// GetData is a wrapper around cairo_image_surface_get_data().
+func (v *Surface) GetData() unsafe.Pointer {
+	return unsafe.Pointer(C.cairo_image_surface_get_data(v.surface))
+}

@@ -56,3 +56,78 @@ func TestTimeoutAdd(t *testing.T) {
 
 	gtk.Main()
 }
+
+// TestTypeNames tests both glib.TypeFromName and glib.Type.Name
+func TestTypeNames(t *testing.T) {
+	tp := glib.TypeFromName("GtkWindow")
+	name := tp.Name()
+
+	if name != "GtkWindow" {
+		t.Error("Expected GtkWindow, got", name)
+	}
+}
+
+func TestTypeIsA(t *testing.T) {
+	tp := glib.TypeFromName("GtkApplicationWindow")
+	tpParent := glib.TypeFromName("GtkWindow")
+
+	isA := tp.IsA(tpParent)
+
+	if !isA {
+		t.Error("Expected true, GtkApplicationWindow is a GtkWindow")
+	}
+}
+
+func TestTypeNextBase(t *testing.T) {
+	tpLeaf := glib.TypeFromName("GtkWindow")
+	tpParent := glib.TypeFromName("GtkContainer")
+
+	tpNextBase := glib.TypeNextBase(tpLeaf, tpParent)
+	name := tpNextBase.Name()
+
+	if name != "GtkBin" {
+		t.Error("Expected GtkBin, got", name)
+	}
+}
+
+func TestValueString_NonEmpty(t *testing.T) {
+
+	expected := "test"
+
+	value, err := glib.GValue(expected)
+	if err != nil {
+		t.Error("acquiring gvalue failed:", err.Error())
+		return
+	}
+
+	actual, err := value.GetString()
+	if err != nil {
+		t.Error(err.Error())
+		return
+	}
+
+	if actual != expected {
+		t.Errorf("Expected %q, got %q", expected, actual)
+	}
+}
+
+func TestValueString_Empty(t *testing.T) {
+
+	expected := ""
+
+	value, err := glib.GValue(expected)
+	if err != nil {
+		t.Error("acquiring gvalue failed:", err.Error())
+		return
+	}
+
+	actual, err := value.GetString()
+	if err != nil {
+		t.Error(err.Error())
+		return
+	}
+
+	if actual != expected {
+		t.Errorf("Expected %q, got %q", expected, actual)
+	}
+}

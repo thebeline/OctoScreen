@@ -519,6 +519,50 @@ func TestCellRendererToggle_WhenSetActivatableTrue_ExpectGetActivatableReturnsTr
 	}
 }
 
+func TestCellRendererAccel_AccelModeMarshaling(t *testing.T) {
+	// CellRendererAccel has no getters/setters, everything is handled via properties, so marshaling has to work
+	renderer, err := CellRendererAccelNew()
+	if err != nil {
+		t.Error(err)
+	}
+
+	err = renderer.SetProperty("accel-mode", CELL_RENDERER_ACCEL_MODE_OTHER)
+	if err != nil {
+		t.Error(err)
+	}
+
+	value, err := renderer.GetProperty("accel-mode")
+	if err != nil {
+		t.Error(err)
+	}
+
+	if CELL_RENDERER_ACCEL_MODE_OTHER != value {
+		t.Errorf("Expected %v, got %v", CELL_RENDERER_ACCEL_MODE_OTHER, value)
+	}
+}
+
+func TestCellRendererAccel_ModifierTypeMarshaling(t *testing.T) {
+	// CellRendererAccel has no getters/setters, everything is handled via properties, so marshaling has to work
+	renderer, err := CellRendererAccelNew()
+	if err != nil {
+		t.Error(err)
+	}
+
+	err = renderer.SetProperty("accel-mods", gdk.META_MASK)
+	if err != nil {
+		t.Error(err)
+	}
+
+	value, err := renderer.GetProperty("accel-mods")
+	if err != nil {
+		t.Error(err)
+	}
+
+	if gdk.META_MASK != value.(gdk.ModifierType) {
+		t.Errorf("Expected %v, got %v", gdk.META_MASK, value.(gdk.ModifierType))
+	}
+}
+
 func setupListStore() *ListStore {
 	ls, err := ListStoreNew(glib.TYPE_STRING)
 	if err != nil {
@@ -637,6 +681,98 @@ func TestListStoreInsertAfter_WhenNilSibling(t *testing.T) {
 
 	if *first != *newIter {
 		t.Fatal("Expected the new iter was prepended to liststore")
+	}
+}
+
+// Test storing and fetching a non-empty string value in a ListStore
+func TestListStoreGetValue_NonEmptyString(t *testing.T) {
+	ls := setupListStore()
+
+	// Add a string
+	err := ls.InsertWithValues(nil, -1, []int{0}, []interface{}{"foo"})
+	if err != nil {
+		t.Fatal("Failed to insert row", err)
+	}
+
+	// Fetch the first iter
+	first, listIsntEmpty := ls.GetIterFirst()
+	if !listIsntEmpty {
+		t.Fatal("Unexpected: liststore is empty")
+	}
+
+	// Obtain a value
+	v, err := ls.GetValue(first, 0)
+	if err != nil {
+		t.Fatal("Failed GetValue()", err)
+	}
+
+	s, err := v.GetString()
+	if err != nil {
+		t.Fatal("Failed GetString()", err)
+	}
+
+	if s != "foo" {
+		t.Errorf("Expected 'foo'; Got %v", s)
+	}
+}
+
+// Test storing and fetching an empty string value in a ListStore
+func TestListStoreGetValue_EmptyString(t *testing.T) {
+	ls := setupListStore()
+
+	// Add a string
+	err := ls.InsertWithValues(nil, -1, []int{0}, []interface{}{""})
+	if err != nil {
+		t.Fatal("Failed to insert row", err)
+	}
+
+	// Fetch the first iter
+	first, listIsntEmpty := ls.GetIterFirst()
+	if !listIsntEmpty {
+		t.Fatal("Unexpected: liststore is empty")
+	}
+
+	// Obtain a value
+	v, err := ls.GetValue(first, 0)
+	if err != nil {
+		t.Fatal("Failed GetValue()", err)
+	}
+
+	s, err := v.GetString()
+	if err != nil {
+		t.Fatal("Failed GetString()", err)
+	}
+
+	if s != "" {
+		t.Errorf("Expected an empty string; Got %v", s)
+	}
+}
+
+// Test storing and fetching a missing string value in a ListStore
+func TestListStoreGetValue_MissingString(t *testing.T) {
+	ls := setupListStore()
+
+	// Add a string
+	err := ls.InsertWithValues(nil, -1, nil, nil)
+	if err != nil {
+		t.Fatal("Failed to insert row", err)
+	}
+
+	// Fetch the first iter
+	first, listIsntEmpty := ls.GetIterFirst()
+	if !listIsntEmpty {
+		t.Fatal("Unexpected: liststore is empty")
+	}
+
+	// Obtain a value
+	v, err := ls.GetValue(first, 0)
+	if err != nil {
+		t.Fatal("Failed GetValue()", err)
+	}
+
+	_, err = v.GetString()
+	if err == nil {
+		t.Fatal("Unexpected success: error expected from GetString()", err)
 	}
 }
 

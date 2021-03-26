@@ -1,6 +1,5 @@
 package glib
 
-// #cgo pkg-config: glib-2.0 gobject-2.0
 // #include <gio/gio.h>
 // #include <glib.h>
 // #include <glib-object.h>
@@ -11,6 +10,10 @@ import "unsafe"
 // Application is a representation of GApplication.
 type Application struct {
 	*Object
+
+	// Interfaces
+	IActionMap
+	IActionGroup
 }
 
 // native() returns a pointer to the underlying GApplication.
@@ -31,7 +34,9 @@ func marshalApplication(p uintptr) (interface{}, error) {
 }
 
 func wrapApplication(obj *Object) *Application {
-	return &Application{obj}
+	am := wrapActionMap(obj)
+	ag := wrapActionGroup(obj)
+	return &Application{obj, am, ag}
 }
 
 // ApplicationIDIsValid is a wrapper around g_application_id_is_valid().
@@ -88,23 +93,6 @@ func (v *Application) GetFlags() ApplicationFlags {
 func (v *Application) SetFlags(flags ApplicationFlags) {
 	C.g_application_set_flags(v.native(), C.GApplicationFlags(flags))
 }
-
-// Only available in GLib 2.42+
-// // GetResourceBasePath is a wrapper around g_application_get_resource_base_path().
-// func (v *Application) GetResourceBasePath() string {
-// 	c := C.g_application_get_resource_base_path(v.native())
-
-// 	return C.GoString((*C.char)(c))
-// }
-
-// Only available in GLib 2.42+
-// // SetResourceBasePath is a wrapper around g_application_set_resource_base_path().
-// func (v *Application) SetResourceBasePath(bp string) {
-// 	cstr1 := (*C.gchar)(C.CString(bp))
-// 	defer C.free(unsafe.Pointer(cstr1))
-
-// 	C.g_application_set_resource_base_path(v.native(), cstr1)
-// }
 
 // GetDbusObjectPath is a wrapper around g_application_get_dbus_object_path().
 func (v *Application) GetDbusObjectPath() string {
@@ -196,12 +184,6 @@ func (v *Application) Run(args []string) int {
 
 	return int(C.g_application_run(v.native(), C.int(len(args)), cargs))
 }
-
-// Only available in GLib 2.44+
-// // GetIsBusy is a wrapper around g_application_get_is_busy().
-// func (v *Application) GetIsBusy() bool {
-// 	return gobool(C.g_application_get_is_busy(v.native()))
-// }
 
 // void 	g_application_bind_busy_property ()
 // void 	g_application_unbind_busy_property ()

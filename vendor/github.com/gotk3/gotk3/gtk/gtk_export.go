@@ -1,44 +1,19 @@
 package gtk
 
 /*
- #cgo pkg-config: gtk+-3.0
  #include <gtk/gtk.h>
 */
 import "C"
 import (
-	"strings"
 	"unsafe"
 
 	"github.com/gotk3/gotk3/glib"
+	"github.com/gotk3/gotk3/internal/callback"
 )
 
-//export substring_match_equal_func
-func substring_match_equal_func(model *C.GtkTreeModel,
-	column C.gint,
-	key *C.gchar,
-	iter *C.GtkTreeIter,
-	data C.gpointer) C.gboolean {
-
-	goModel := &TreeModel{glib.Take(unsafe.Pointer(model))}
-	goIter := &TreeIter{(C.GtkTreeIter)(*iter)}
-
-	value, err := goModel.GetValue(goIter, int(column))
-	if err != nil {
-		return gbool(true)
-	}
-
-	str, _ := value.GetString()
-	if str == "" {
-		return gbool(true)
-	}
-
-	subStr := C.GoString((*C.char)(key))
-	res := strings.Contains(str, subStr)
-	return gbool(!res)
-}
-
 //export goBuilderConnect
-func goBuilderConnect(builder *C.GtkBuilder,
+func goBuilderConnect(
+	builder *C.GtkBuilder,
 	object *C.GObject,
 	signal_name *C.gchar,
 	handler_name *C.gchar,
@@ -71,35 +46,64 @@ func goBuilderConnect(builder *C.GtkBuilder,
 	gobj.Connect(s, handler)
 }
 
-//export goPageSetupDone
-func goPageSetupDone(setup *C.GtkPageSetup,
-	data C.gpointer) {
-
-	id := int(uintptr(data))
-
-	pageSetupDoneCallbackRegistry.Lock()
-	r := pageSetupDoneCallbackRegistry.m[id]
-	delete(pageSetupDoneCallbackRegistry.m, id)
-	pageSetupDoneCallbackRegistry.Unlock()
-
-	obj := glib.Take(unsafe.Pointer(setup))
-	r.fn(wrapPageSetup(obj), r.data)
-
+//export goTreeViewSearchEqualFunc
+func goTreeViewSearchEqualFunc(model *C.GtkTreeModel, column C.gint, key *C.gchar, iter *C.GtkTreeIter, data C.gpointer) C.gboolean {
+	fn := callback.Get(uintptr(data)).(TreeViewSearchEqualFunc)
+	return gbool(fn(
+		wrapTreeModel(glib.Take(unsafe.Pointer(model))),
+		int(column),
+		C.GoString(key),
+		&TreeIter{(C.GtkTreeIter)(*iter)},
+	))
 }
 
-//export goPrintSettings
-func goPrintSettings(key *C.gchar,
-	value *C.gchar,
-	userData C.gpointer) {
+//export goTreeModelFilterVisibleFunc
+func goTreeModelFilterVisibleFunc(model *C.GtkTreeModel, iter *C.GtkTreeIter, data C.gpointer) C.gboolean {
+	goIter := &TreeIter{(C.GtkTreeIter)(*iter)}
+	fn := callback.Get(uintptr(data)).(TreeModelFilterVisibleFunc)
+	return gbool(fn(
+		wrapTreeModel(glib.Take(unsafe.Pointer(model))),
+		goIter,
+	))
+}
 
-	id := int(uintptr(userData))
+//export goTreeSortableSortFunc
+func goTreeSortableSortFunc(model *C.GtkTreeModel, a, b *C.GtkTreeIter, data C.gpointer) C.gint {
+	fn := callback.Get(uintptr(data)).(TreeIterCompareFunc)
+	return C.gint(fn(
+		wrapTreeModel(glib.Take(unsafe.Pointer(model))),
+		&TreeIter{(C.GtkTreeIter)(*a)},
+		&TreeIter{(C.GtkTreeIter)(*b)},
+	))
+}
 
-	printSettingsCallbackRegistry.Lock()
-	r := printSettingsCallbackRegistry.m[id]
-	// TODO: figure out a way to determine when we can clean up
-	//delete(printSettingsCallbackRegistry.m, id)
-	printSettingsCallbackRegistry.Unlock()
+//export goTreeModelForeachFunc
+func goTreeModelForeachFunc(model *C.GtkTreeModel, path *C.GtkTreePath, iter *C.GtkTreeIter, data C.gpointer) C.gboolean {
+	fn := callback.Get(uintptr(data)).(TreeModelForeachFunc)
+	return gbool(fn(
+		wrapTreeModel(glib.Take(unsafe.Pointer(model))),
+		&TreePath{(*C.GtkTreePath)(path)},
+		&TreeIter{(C.GtkTreeIter)(*iter)},
+	))
+}
 
-	r.fn(C.GoString((*C.char)(key)), C.GoString((*C.char)(value)), r.userData)
+//export goTreeSelectionForeachFunc
+func goTreeSelectionForeachFunc(model *C.GtkTreeModel, path *C.GtkTreePath, iter *C.GtkTreeIter, data C.gpointer) {
+	fn := callback.Get(uintptr(data)).(TreeSelectionForeachFunc)
+	fn(
+		wrapTreeModel(glib.Take(unsafe.Pointer(model))),
+		&TreePath{(*C.GtkTreePath)(path)},
+		&TreeIter{(C.GtkTreeIter)(*iter)},
+	)
+}
 
+//export goTreeSelectionFunc
+func goTreeSelectionFunc(selection *C.GtkTreeSelection, model *C.GtkTreeModel, path *C.GtkTreePath, selected C.gboolean, data C.gpointer) C.gboolean {
+	fn := callback.Get(uintptr(data)).(TreeSelectionFunc)
+	return gbool(fn(
+		wrapTreeSelection(glib.Take(unsafe.Pointer(selection))),
+		wrapTreeModel(glib.Take(unsafe.Pointer(model))),
+		&TreePath{(*C.GtkTreePath)(path)},
+		gobool(selected),
+	))
 }

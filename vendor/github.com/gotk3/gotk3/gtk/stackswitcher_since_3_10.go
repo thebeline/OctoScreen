@@ -6,7 +6,6 @@
 
 package gtk
 
-// #cgo pkg-config: gtk+-3.0
 // #include <stdlib.h>
 // #include <gtk/gtk.h>
 // #include "gtk_since_3_10.go.h"
@@ -51,6 +50,10 @@ func marshalStackSwitcher(p uintptr) (interface{}, error) {
 }
 
 func wrapStackSwitcher(obj *glib.Object) *StackSwitcher {
+	if obj == nil {
+		return nil
+	}
+
 	return &StackSwitcher{Box{Container{Widget{glib.InitiallyUnowned{obj}}}}}
 }
 
