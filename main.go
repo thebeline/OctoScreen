@@ -64,6 +64,7 @@ func init() {
 
 
 func main() {
+	
 	defer func() {
 		standardLog.Println("main's defer() was called, now calling recover()")
 		rec := recover();
