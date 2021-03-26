@@ -32,6 +32,7 @@ var (
 	initSucceeded bool
 )
 
+
 func init() {
 	logger.Debug("-")
 	logger.Debug("-")
@@ -60,7 +61,6 @@ func init() {
 	logger.Debug("-")
 	logger.Debug("-")
 }
-
 
 func main() {
 	defer func() {
