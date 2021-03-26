@@ -335,7 +335,7 @@ linters:
     - unused
     - whitespace
     - wsl
-#    - gofumpt
+    - gofumpt
     - errorlint
     - makezero
   disable-all: true
