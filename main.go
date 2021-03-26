@@ -41,8 +41,10 @@ func main() {
 		// values (defined in globalVars.go).
 		_ = ui.New(BaseURL, APIKey, width, height)
 	} else {
+		
 		fatalErrorWindow := ui.CreateFatalErrorWindow("Required environment variable is not set:", utils.NameOfMissingRequiredEnvironmentVariable(APIKey))
 		fatalErrorWindow.ShowAll()
+		
 	}
 
 	gtk.Main()
@@ -116,7 +118,7 @@ func setBaseUrl(cfg *config) {
 	} else {
 		url := strings.ToLower(BaseURL)
 		if !strings.HasPrefix(url, "http://") && !strings.HasPrefix(url, "https://") {
-			utils.Logger.Warn("WARNING!  OCTOPRINT_HOST requires the transport protocol ('http://' or 'https://') but is missing.  'http://' is being added to BaseURL.");
+			utils.Logger.Warn("WARNING!  OCTOPRINT_HOST requires the transport protocol ('http://' or 'https://') but is misssing.  'http://' is being added to BaseURL.");
 			BaseURL = fmt.Sprintf("http://%s", BaseURL)
 		}
 	}
