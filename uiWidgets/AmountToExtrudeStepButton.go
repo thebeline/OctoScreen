@@ -8,7 +8,7 @@ type AmountToExtrudeStepButton struct {
 }
 
 func CreateAmountToExtrudeStepButton() *AmountToExtrudeStepButton {
-	base, err := CreateStepButton(
+	base := CreateStepButton(
 		2,
 		Step{" 20mm", "move-step.svg", nil,  20},
 		Step{" 50mm", "move-step.svg", nil,  50},
@@ -17,10 +17,7 @@ func CreateAmountToExtrudeStepButton() *AmountToExtrudeStepButton {
 		Step{"  5mm", "move-step.svg", nil,   5},
 		Step{" 10mm", "move-step.svg", nil,  10},
 	)
-	if err != nil {
-		panic(err)
-	}
-
+	
 	instance := &AmountToExtrudeStepButton{
 		StepButton: base,
 	}

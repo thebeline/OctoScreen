@@ -41,10 +41,7 @@ func CreateFilamentExtrudeButton(
 		selectToolStepButton:		selectToolStepButton,
 		isForward:					isForward,
 	}
-	_, err := instance.Button.Connect("clicked", instance.handleClicked)
-	if err != nil {
-		panic(err)
-	}
+	instance.Button.Connect("clicked", instance.handleClicked)
 
 	return instance
 }

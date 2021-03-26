@@ -365,7 +365,7 @@ func confirmStopDialogBox(
 		ctx.AddClass("dialog")
 
 		userResponse := dialogBox.Run()
-		if userResponse == int(gtk.RESPONSE_YES) {
+		if userResponse == gtk.RESPONSE_YES {
 			utils.Logger.Warning("Stopping job")
 			if err := (&octoprint.CancelRequest{}).Do(printStatusPanel.UI.Client); err != nil {
 				utils.LogError("print_status.confirmStopDialogBox()", "Do(CancelRequest)", err)

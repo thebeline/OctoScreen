@@ -89,10 +89,7 @@ func (this *zOffsetCalibrationPanel) initialize() {
 // First row
 func (this *zOffsetCalibrationPanel) CreateSelectToolStepButton() {
 	this.selectToolStepButton = uiWidgets.CreateSelectToolStepButton(this.UI.Client, false)
-	_, err := this.selectToolStepButton.Connect("clicked", this.selectToolStepButtonHandleClick)
-	if err != nil {
-		panic(err)
-	}
+	this.selectToolStepButton.Connect("clicked", this.selectToolStepButtonHandleClick)
 
 	toolheadCount := utils.GetToolheadCount(this.UI.Client)
 	if toolheadCount > 1 {
@@ -129,10 +126,7 @@ func (this *zOffsetCalibrationPanel) selectToolStepButtonHandleClick() {
 
 func (this *zOffsetCalibrationPanel) CreateDecreaseZOffsetButton() {
 	this.decreaseZOffsetButton = uiWidgets.CreateIncreaseZOffsetButton(false)
-	_, err := this.decreaseZOffsetButton.Connect("clicked", this.decreaseZOffsetButtonClicked)
-	if err != nil {
-		panic(err)
-	}
+	this.decreaseZOffsetButton.Connect("clicked", this.decreaseZOffsetButtonClicked)
 	this.Grid().Attach(this.decreaseZOffsetButton, 1, 0, 1, 1)
 }
 
@@ -146,10 +140,7 @@ func (this *zOffsetCalibrationPanel) decreaseZOffsetButtonClicked() {
 
 func (this *zOffsetCalibrationPanel) CreateIncreaseZOffsetButton() {
 	this.increaseZOffsetButton = uiWidgets.CreateIncreaseZOffsetButton(true)
-	_, err := this.increaseZOffsetButton.Connect("clicked", this.increaseZOffsetButtonClicked)
-	if err != nil {
-		panic(err)
-	}
+	this.increaseZOffsetButton.Connect("clicked", this.increaseZOffsetButtonClicked)
 	this.Grid().Attach(this.increaseZOffsetButton, 2, 0, 1, 1)
 }
 
@@ -179,10 +170,7 @@ func (this *zOffsetCalibrationPanel) CreateZOffsetLabel() *gtk.Label {
 // Third row
 func (this *zOffsetCalibrationPanel) CreateManualZCalibrationStepButton() {
 	this.manualZCalibrationStepButton = uiWidgets.CreateManualZCalibrationStepButton()
-	_, err := this.manualZCalibrationStepButton.Connect("clicked", this.manualZCalibrationStepButtonHandleClick)
-	if err != nil {
-		panic(err)
-	}
+	this.manualZCalibrationStepButton.Connect("clicked", this.manualZCalibrationStepButtonHandleClick)
 
 	this.Grid().Attach(this.manualZCalibrationStepButton, 0, 2, 1, 1)
 }

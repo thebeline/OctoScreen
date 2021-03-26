@@ -24,7 +24,7 @@ type StepButton struct {
 	CurrentStep		int
 }
 
-func CreateStepButton(colorVariation int, steps ...Step) (*StepButton, error) {
+func CreateStepButton(colorVariation int, steps ...Step) (*StepButton) {
 	if len(steps) < 1 {
 		panic("StepButton.CreateStepButton() - steps is empty")
 	}
@@ -48,9 +48,9 @@ func CreateStepButton(colorVariation int, steps ...Step) (*StepButton, error) {
 		instance.CurrentStep = 0
 	}
 
-	_, err := instance.Button.Connect("clicked", instance.handleClick)
+	instance.Button.Connect("clicked", instance.handleClick)
 
-	return instance, err
+	return instance
 }
 
 func (this *StepButton) Value() interface{} {

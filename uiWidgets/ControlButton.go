@@ -29,10 +29,7 @@ func CreateControlButton(
 		parentWindow:		parentWindow,
 		controlDefinition:	controlDefinition,
 	}
-	_, err := instance.Button.Connect("clicked", instance.handleClicked)
-	if err != nil {
-		panic(err)
-	}
+	instance.Button.Connect("clicked", instance.handleClicked)
 
 	return instance
 }
