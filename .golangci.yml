@@ -5,12 +5,14 @@ run:
   # OctoScreen Note:
   #   Build on a Pi takes ~25m, so we give it some headroom
   timeout: 60m
+  
+  issues-exit-code: 1
 
   # include test files or not, default is true
   #
   # OctoScreen Note:
-  #   We don't generate test structures, dissabling this may speed up linter.
-  #tests: false
+  #   We don't generate test structures, this may speed up the linter.
+  tests: false
 
   # which dirs to skip: issues from them won't be reported;
   # can use regexp here: generated.*, regexp is applied on full path;
@@ -35,13 +37,6 @@ run:
   # directory holds the correct copies of dependencies and ignores
   # the dependency descriptions in go.mod.
   modules-download-mode: vendor
-
-  # Allow multiple parallel golangci-lint instances running.
-  # If false (default) - golangci-lint acquires file lock on start.
-  #
-  # OctoScreen Note:
-  #   This might be something we want
-  #allow-parallel-runners: true
 
 # all available settings of specific linters
 linters-settings:
