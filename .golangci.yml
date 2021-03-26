@@ -6,6 +6,10 @@ run:
   #   Build on a Pi takes ~25m, so we give it some headroom
   timeout: 60m
   
+  # Anotate with no errors or fails.
+  # FIXME
+  #   JUST for the initial period of time to see how things go
+  #   without COMPLETELY trashing the current flow
   issues-exit-code: 0
 
   # include test files or not, default is true
@@ -415,7 +419,7 @@ issues:
   #new-from-patch: path/to/patch/file
 
   # Fix found issues (if it's supported by the linter)
-#  fix: true
+  fix: true
 
 severity:
   # Default value is empty string.
