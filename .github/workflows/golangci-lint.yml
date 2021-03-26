@@ -35,4 +35,5 @@ jobs:
           version: v1.39.0
           skip-go-installation: true
           only-new-issues: true
-          args: -v
+          # FIXME Only for the time being, we should comment this out once we are comfortable with it.
+          args: -v --issues-exit-code 0

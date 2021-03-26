@@ -5,12 +5,6 @@ run:
   # OctoScreen Note:
   #   Build on a Pi takes ~25m, so we give it some headroom
   timeout: 60m
-  
-  # Anotate with no errors or fails.
-  # FIXME
-  #   JUST for the initial period of time to see how things go
-  #   without COMPLETELY trashing the current flow
-  issues-exit-code: 1
 
   # include test files or not, default is true
   #
@@ -363,17 +357,6 @@ issues:
       linters:
         - unused
 
-#    # Exclude known linters from partially hard-vendored code,
-#    # which is impossible to exclude via "nolint" comments.
-#    - path: internal/hmac/
-#      text: "weak cryptographic primitive"
-#      linters:
-#        - gosec
-
-#    # Exclude some staticcheck messages
-#    - linters:
-#        - staticcheck
-#      text: "SA9003:"
 
     # Exclude lll issues for long lines with go:generate
     - linters:
@@ -411,15 +394,6 @@ issues:
   #   We set this to TRUE so you could, in theory, run this from the CLI.
   #   The GitHub Action will overwrite this and set it to FALSE.
   new: true
-
-  # Show only new issues created after git revision `REV`
-#  new-from-rev: REV
-
-  # Show only new issues created in git patch with set file path.
-  #new-from-patch: path/to/patch/file
-
-  # Fix found issues (if it's supported by the linter)
-  fix: true
 
 severity:
   # Default value is empty string.
