@@ -12,7 +12,7 @@ run:
   #   We don't generate test structures, this may speed up the linter.
   tests: false
   
-  issues-exit-code: 0
+  issues-exit-code: 1
 
   # which dirs to skip: issues from them won't be reported;
   # can use regexp here: generated.*, regexp is applied on full path;
@@ -428,7 +428,7 @@ severity:
   # - Code climate: https://docs.codeclimate.com/docs/issues#issue-severity
   # -   Checkstyle: https://checkstyle.sourceforge.io/property_types.html#severity
   # -       Github: https://help.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-error-message
-  default-severity: warning
+  default-severity: error
 
   # The default value is false.
   # If set to true severity-rules regular expressions become case sensitive.
