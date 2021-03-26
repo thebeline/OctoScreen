@@ -214,7 +214,7 @@ linters-settings:
     # Correct spellings using locale preferences for US or UK.
     # Default is to use a neutral variety of English.
     # Setting locale to US will correct the British spelling of 'colour' to 'color'.
-#    locale: US
+    locale: US
   nakedret:
     # make an issue if func has more lines of code than this setting and it has naked returns; default is 30
     max-func-lines: 30
@@ -331,7 +331,7 @@ linters:
     - unused
     - whitespace
     - wsl
-    - gofumpt
+#    - gofumpt
     - errorlint
     - makezero
   disable-all: true
