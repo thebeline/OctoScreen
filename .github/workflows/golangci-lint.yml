@@ -25,7 +25,7 @@ jobs:
         with:
           # Supports build all the way back to Jessie, NOT ideal...
           # If we didn't support Jessie, we could use 1.15.* or 1.16.*
-          go-version: '1.8.7'
+          go-version: '1.11.0'
       - name: Configure GO ENV
         run: |
           go version
