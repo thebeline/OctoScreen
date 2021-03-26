@@ -31,7 +31,7 @@ func CreateCommandButton(
 	}
 	_, err := instance.Button.Connect("clicked", instance.handleClicked)
 	
-	a := 1
+	
 	if err != nil {
 		panic(err)
 	}
