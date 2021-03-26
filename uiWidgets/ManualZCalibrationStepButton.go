@@ -1,8 +1,5 @@
 package uiWidgets
 
-import (
-)
-
 type ManualZCalibrationStepButton struct {
 	*StepButton
 }

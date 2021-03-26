@@ -1,8 +1,5 @@
 package uiWidgets
 
-import (
-)
-
 type TemperatureAmountStepButton struct {
 	*StepButton
 }

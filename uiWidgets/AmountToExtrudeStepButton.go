@@ -1,8 +1,5 @@
 package uiWidgets
 
-import (
-)
-
 type AmountToExtrudeStepButton struct {
 	*StepButton
 }

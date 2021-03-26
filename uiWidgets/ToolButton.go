@@ -5,10 +5,11 @@ import (
 	"sync"
 
 	"github.com/gotk3/gotk3/gtk"
-	"github.com/mcuadros/go-octoprint"
+	"github.com/Z-Bolt/OctoScreen/logger"
+	"github.com/Z-Bolt/OctoScreen/octoprintApis"
+	"github.com/Z-Bolt/OctoScreen/octoprintApis/dataModels"
 	"github.com/Z-Bolt/OctoScreen/utils"
 )
-
 
 
 func ToolImageFileName(
@@ -43,12 +44,12 @@ type ToolButton struct {
 
 	isHeating		bool
 	tool			string
-	printer			*octoprint.Client
+	printer			*octoprintApis.Client
 }
 
 func CreateToolButton(
 	index			int,
-	printer			*octoprint.Client,
+	printer			*octoprintApis.Client,
 ) *ToolButton {
 	imageFileName := ToolImageFileName(index)
 	toolName := ToolName(index)
@@ -75,7 +76,7 @@ func (this *ToolButton) UpdateStatus(heating bool) {
 	this.isHeating = heating
 }
 
-func (this *ToolButton) SetTemperatures(temperatureData octoprint.TemperatureData) {
+func (this *ToolButton) SetTemperatures(temperatureData dataModels.TemperatureData) {
 	text := utils.GetTemperatureDataString(temperatureData)
 	this.SetLabel(text)
 	this.UpdateStatus(temperatureData.Target > 0)
@@ -84,9 +85,9 @@ func (this *ToolButton) SetTemperatures(temperatureData octoprint.TemperatureDat
 func (this *ToolButton) GetProfileTemperature() float64 {
 	temperature := 0.0
 
-	settingsResponse, err := (&octoprint.SettingsRequest{}).Do(this.printer)
+	settingsResponse, err := (&octoprintApis.SettingsRequest{}).Do(this.printer)
 	if err != nil {
-		utils.LogError("ToolButton.GetProfileTemperature()", "Do(SettingsRequest)", err)
+		logger.LogError("ToolButton.GetProfileTemperature()", "Do(SettingsRequest)", err)
 		return 0
 	}
 
@@ -124,16 +125,16 @@ func (this *ToolButton) clicked() {
 	}
 
 	if this.tool == "bed" {
-		cmd := &octoprint.BedTargetRequest{Target: target}
+		cmd := &octoprintApis.BedTargetRequest{Target: target}
 		err = cmd.Do(this.printer)
 		if err != nil {
-			utils.LogError("ToolButton.clicked()", "Do(BedTargetRequest)", err)
+			logger.LogError("ToolButton.clicked()", "Do(BedTargetRequest)", err)
 		}
 	} else {
-		cmd := &octoprint.ToolTargetRequest{Targets: map[string]float64{this.tool: target}}
+		cmd := &octoprintApis.ToolTargetRequest{Targets: map[string]float64{this.tool: target}}
 		err = cmd.Do(this.printer)
 		if err != nil {
-			utils.LogError("ToolButton.clicked()", "Do(ToolTargetRequest)", err)
+			logger.LogError("ToolButton.clicked()", "Do(ToolTargetRequest)", err)
 		}
 	}
 }

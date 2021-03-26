@@ -5,7 +5,9 @@ import (
 	"sync"
 
 	"github.com/gotk3/gotk3/glib"
+	"github.com/Z-Bolt/OctoScreen/logger"
 )
+
 
 type BackgroundTask struct {
 	sync.Mutex
@@ -34,7 +36,7 @@ func (this *BackgroundTask) Start() {
 	this.Lock()
 	defer this.Unlock()
 
-	Logger.Info("New background task started")
+	logger.Info("New background task started")
 	go this.loop()
 
 	this.isRunning = true
@@ -62,7 +64,7 @@ func (this *BackgroundTask) loop() {
 				this.execute()
 
 			case <-this.close:
-				Logger.Info("Background task closed")
+				logger.Info("Background task closed")
 				return
 		}
 	}
@@ -71,6 +73,6 @@ func (this *BackgroundTask) loop() {
 func (this *BackgroundTask) execute() {
 	SourceHandle := glib.IdleAdd(this.task)
 	if SourceHandle == 0 {
-		Logger.Fatal("common.execute()", "IdleAdd()")
+		logger.Fatal("common.execute()", "IdleAdd()")
 	}
 }
