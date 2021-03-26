@@ -6,7 +6,7 @@ run:
   #   Build on a Pi takes ~25m, so we give it some headroom
   timeout: 60m
   
-  issues-exit-code: 1
+  issues-exit-code: 0
 
   # include test files or not, default is true
   #
