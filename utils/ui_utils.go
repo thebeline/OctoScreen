@@ -99,7 +99,7 @@ func MustConfirmDialogBox(parent *gtk.Window, msg string, cb func()) func() {
 		ctx, _ := win.GetStyleContext()
 		ctx.AddClass("dialog")
 
-		if win.Run() == int(gtk.RESPONSE_YES) {
+		if win.Run() == gtk.RESPONSE_YES {
 			cb()
 		}
 	}

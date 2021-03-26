@@ -69,8 +69,8 @@ func (this *BackgroundTask) loop() {
 }
 
 func (this *BackgroundTask) execute() {
-	_, err := glib.IdleAdd(this.task)
-	if err != nil {
-		LogFatalError("common.execute()", "IdleAdd()", err)
+	SourceHandle := glib.IdleAdd(this.task)
+	if SourceHandle == nil {
+		LogFatalError("common.execute()", "IdleAdd()")
 	}
 }
