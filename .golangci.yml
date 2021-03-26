@@ -5,6 +5,10 @@ run:
   # OctoScreen Note:
   #   Build on a Pi takes ~25m, so we give it some headroom
   timeout: 60m
+  
+  build-tags:
+   - gtk_3_24
+   - pango_1_42
 
   # include test files or not, default is true
   #
