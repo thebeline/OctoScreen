@@ -10,7 +10,7 @@ run:
   # FIXME
   #   JUST for the initial period of time to see how things go
   #   without COMPLETELY trashing the current flow
-  issues-exit-code: 0
+  issues-exit-code: 1
 
   # include test files or not, default is true
   #
