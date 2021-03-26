@@ -35,3 +35,4 @@ jobs:
           version: v1.39.0
           skip-go-installation: true
           only-new-issues: true
+          args: -v
