@@ -340,7 +340,7 @@ linters:
 ##    - cyclop
     - godot
     - godox
-####    - goimports
+    - goimports
 ###    - stylecheck
     - gomnd
     - govet
