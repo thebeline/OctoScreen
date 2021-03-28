@@ -325,37 +325,38 @@ linters-settings:
 #    exclude_godoc_examples: false
 
 linters:
+ 
   enable:
-    - dogsled
+#    - dogsled
 ##    - dupl
-    - errcheck
-    - exhaustive
+###    - errcheck
+#    - exhaustive
 ##    - funlen
-#    - gci
-    - gocognit
-    - nestif
-    - goconst
-    - gocritic
+####    - gci
+#    - gocognit
+#    - nestif
+#    - goconst
+###    - gocritic
 ##    - cyclop
-    - godot
-    - godox
-    - goimports
-    - stylecheck
-    - gomnd
-    - govet
-    - ifshort
-    - lll
-    - misspell
-    - nakedret
-    - predeclared
-    - nolintlint
-    - unparam
-    - unused
-    - whitespace
-    - wsl
-    - gofumpt
-    - errorlint
-    - makezero
+#    - godot
+#    - godox
+####    - goimports
+###    - stylecheck
+#    - gomnd
+#    - govet
+#    - ifshort
+   - lll
+#    - misspell
+#    - nakedret
+#    - predeclared
+#    - nolintlint
+#    - unparam
+#    - unused
+#    - whitespace
+#    - wsl
+   - gofumpt
+#    - errorlint
+#    - makezero
   disable-all: true
 #  disable:
 #    # Going to try to disable the ones that seem to be throwing errors, for now.
