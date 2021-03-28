@@ -328,20 +328,20 @@ linters:
  
   enable:
     - dogsled
-##    - dupl
-###    - errcheck
+    - dupl
+    - errcheck
     - exhaustive
-##    - funlen
-####    - gci
+    - funlen
+    - gci
     - gocognit
     - nestif
     - goconst
-###    - gocritic
-##    - cyclop
+    - gocritic
+    - cyclop
     - godot
     - godox
     - goimports
-###    - stylecheck
+    - stylecheck
     - gomnd
     - govet
     - ifshort
