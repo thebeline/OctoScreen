@@ -37,7 +37,7 @@ jobs:
           skip-go-installation: true
           only-new-issues: true
           # To prevent PR blocking
-          args: --issues-exit-code 0
+          args: --issues-exit-code 0 -E whitespace
       - name: GolangCI Lint Blocking Issues
         # This run would be for issues that we would like to block a Pull Request from validating
         # Significant Style issues, or Errors, etc
@@ -47,7 +47,7 @@ jobs:
           skip-go-installation: true
           only-new-issues: true
           # To BLOCK the PR
-          # args: --issues-exit-code 1
+          # args: --issues-exit-code 1 -E lll
           
           # FIXME Only for the time being, we should comment this out and uncomment the above line, once we are comfortable with it.
-          args: --issues-exit-code 0
+          args: --issues-exit-code 0 -E lll
