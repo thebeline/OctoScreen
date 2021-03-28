@@ -47,6 +47,7 @@ jobs:
           skip-go-installation: true
           only-new-issues: true
           # To BLOCK the PR
-          args: --issues-exit-code 1
-          # FIXME Only for the time being, we should comment this out once we are comfortable with it.
+          # args: --issues-exit-code 1
+          
+          # FIXME Only for the time being, we should comment this out and uncomment the above line, once we are comfortable with it.
           args: --issues-exit-code 0
