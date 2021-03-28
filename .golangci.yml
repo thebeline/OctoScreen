@@ -378,9 +378,9 @@ issues:
   # Excluding configuration per-path, per-linter, per-text and per-source
   exclude-rules:
     # Exclude some linters from running on tests files.
-    - path: ".*github.com/gotk3/.*"
-      linters:
-        - unused
+#    - path: ".*github.com/gotk3/.*"
+#      linters:
+#        - unused
 
 
     # Exclude lll issues for long lines with go:generate
@@ -399,8 +399,8 @@ issues:
   exclude-case-sensitive: false
 
   # The list of ids of default excludes to include or disable. By default it's empty.
-  include:
-    - EXC0002 # disable excluding of issues about comments from golint
+#  include:
+#    - EXC0002 # disable excluding of issues about comments from golint
 
   # Maximum issues count per one linter. Set to 0 to disable. Default is 50.
   max-issues-per-linter: 0
@@ -429,7 +429,7 @@ severity:
   # - Code climate: https://docs.codeclimate.com/docs/issues#issue-severity
   # -   Checkstyle: https://checkstyle.sourceforge.io/property_types.html#severity
   # -       Github: https://help.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-error-message
-  default-severity: error
+  default-severity: warning
 
   # The default value is false.
   # If set to true severity-rules regular expressions become case sensitive.
@@ -443,4 +443,4 @@ severity:
   rules:
     - linters:
       - dupl
-      severity: info
+      severity: warning
