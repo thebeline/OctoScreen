@@ -35,4 +35,4 @@ jobs:
           skip-go-installation: true
           only-new-issues: true
           # FIXME Only for the time being, we should comment this out once we are comfortable with it.
-          args: --issues-exit-code 0 --out-format checkstyle
+          #args: --issues-exit-code 0
