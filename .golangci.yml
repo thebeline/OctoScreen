@@ -332,7 +332,7 @@ linters:
     - errcheck
     - exhaustive
     - funlen
-    - gci
+#    - gci
     - gocognit
     - nestif
     - goconst
