@@ -332,7 +332,9 @@ linters:
     - errcheck
     - exhaustive
     - funlen
-    - gci
+# `gci` has issues with `golang1.15.x` and `golang1.16.x` has issues with our packaged version of `gotk3`
+# We can uncomment this once `golang1.16.x` vs `gotk3` (including our packaged version) is resolved
+#    - gci
     - gocognit
     - nestif
     - goconst
