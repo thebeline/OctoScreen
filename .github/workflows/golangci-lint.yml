@@ -28,26 +28,11 @@ jobs:
           go version
           go env -w GOFLAGS=-tags=gtk_$(pkg-config --modversion gtk+-3.0 | tr -t . _ | cut -d _ -f 1-2),pango_$(pkg-config --modversion pango | tr -t . _ | cut -d _ -f 1-2),gdk_pixbuf_$(pkg-config --modversion gdk-pixbuf-2.0 | tr -t . _ | cut -d _ -f 1-2),glib_$(pkg-config --modversion glib-2.0 | tr -t . _ | cut -d _ -f 1-2)
           go env
-      - name: GolangCI Lint Non-Blocking Issues
-        # This run would be for ideal-case issues, style preferences, performance suggestions, etc.
-        # Issues that should NOT block a PR
+      - name: GolangCI Lint
         uses: golangci/golangci-lint-action@master
         with:
           version: v1.39.0
           skip-go-installation: true
           only-new-issues: true
-          # To prevent PR blocking
-          args: --issues-exit-code 0 --disable-all -E whitespace
-      - name: GolangCI Lint Blocking Issues
-        # This run would be for issues that we would like to block a Pull Request from validating
-        # Significant Style issues, or Errors, etc
-        uses: golangci/golangci-lint-action@master
-        with:
-          version: v1.39.0
-          skip-go-installation: true
-          only-new-issues: true
-          # To BLOCK the PR
-          # args: --issues-exit-code 1 -E lll
-          
-          # FIXME Only for the time being, we should comment this out and uncomment the above line, once we are comfortable with it.
-          args: --issues-exit-code 0 --disable-all -E lll
+          # FIXME Only for the time being, we should comment this out once we are comfortable with it.
+          args: --issues-exit-code 0
