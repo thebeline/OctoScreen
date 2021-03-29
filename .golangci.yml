@@ -345,14 +345,15 @@ linters:
 #    - gomnd
 #    - govet
 #    - ifshort
-    - lll
+    - gofumpt
+#    - lll
 #    - misspell
 #    - nakedret
 #    - predeclared
 #    - nolintlint
 #    - unparam
 #    - unused
-    - whitespace
+#    - whitespace
 #    - wsl
 #    - errorlint
 #    - makezero
