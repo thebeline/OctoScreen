@@ -226,6 +226,10 @@ linters-settings:
     max-decl-lines: 1
     # Maximum length of variable declaration measured in number of characters, after which linter won't suggest using short syntax.
     max-decl-chars: 30
+  gofumpt:
+    # Choose whether or not to use the extra rules that are disabled
+    # by default
+    extra-rules: true
   lll:
     # max line length, lines longer will be reported. Default is 120.
     # '\t' is counted as 1 character by default, and can be changed with the tab-width option
@@ -305,10 +309,6 @@ linters-settings:
     force-err-cuddling: false
     # Allow leading comments to be separated with empty lines
     allow-separated-leading-comment: false
-  gofumpt:
-    # Choose whether or not to use the extra rules that are disabled
-    # by default
-    extra-rules: true
   errorlint:
     # Report non-wrapping error creation using fmt.Errorf
     errorf: true
@@ -345,6 +345,7 @@ linters:
 #    - gomnd
 #    - govet
 #    - ifshort
+    - gofumpt
     - lll
 #    - misspell
 #    - nakedret
@@ -354,7 +355,6 @@ linters:
 #    - unused
     - whitespace
 #    - wsl
-    - gofumpt
 #    - errorlint
 #    - makezero
   disable-all: true
