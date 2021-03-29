@@ -51,7 +51,7 @@ output:
   print-linter-name: true
 
   # make issues output unique by line, default is true
-  uniq-by-line: false
+  uniq-by-line: true
 
   # add a prefix to the output file references; default is no prefix
   path-prefix: ""
