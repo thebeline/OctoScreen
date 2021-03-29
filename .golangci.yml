@@ -327,37 +327,37 @@ linters-settings:
 linters:
  
   enable:
-#    - dogsled
-#    - dupl
-#    - errcheck
-#    - exhaustive
-#    - funlen
-#    - gci
-#    - gocognit
-#    - nestif
-#    - goconst
-#    - gocritic
-#    - cyclop
-#    - godot
-#    - godox
-#    - goimports
-#    - stylecheck
-#    - gomnd
-#    - govet
-#    - ifshort
-#    - gofumpt
-#    - lll
-#    - misspell
-#    - nakedret
-#    - predeclared
-#    - nolintlint
+    - dogsled
+    - dupl
+    - errcheck
+    - exhaustive
+    - funlen
+    - gci
+    - gocognit
+    - nestif
+    - goconst
+    - gocritic
+    - cyclop
+    - godot
+    - godox
+    - goimports
+    - stylecheck
+    - gomnd
+    - govet
+    - ifshort
+    - gofumpt
+    - lll
+    - misspell
+    - nakedret
+    - predeclared
+    - nolintlint
     - unparam
     - gas
-#    - unused
-#    - whitespace
-#    - wsl
-#    - errorlint
-#    - makezero
+    - unused
+    - whitespace
+    - wsl
+    - errorlint
+    - makezero
   disable-all: true
 #  disable:
 #    # Going to try to disable the ones that seem to be throwing errors, for now.

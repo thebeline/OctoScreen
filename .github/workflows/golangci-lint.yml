@@ -24,9 +24,13 @@ jobs:
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y --no-install-recommends build-essential git-buildpackage fakeroot libcairo2-dev libgtk-3-dev git devscripts gccgo gcc libc-dev
       - name: Configure Golang ENV
+        # This ensures that the correct build flags are set for the linters.
+        # To have this be the ACTUAL installed versions, use
+        #   go env -w GOFLAGS=-tags=gtk_$(pkg-config --modversion gtk+-3.0 | tr -t . _ | cut -d _ -f 1-2),pango_$(pkg-config --modversion pango | tr -t . _ | cut -d _ -f 1-2),gdk_pixbuf_$(pkg-config --modversion gdk-pixbuf-2.0 | tr -t . _ | cut -d _ -f 1-2),glib_$(pkg-config --modversion glib-2.0 | tr -t . _ | cut -d _ -f 1-2)
+        # I set it to these statics, as these are the statics used in the MakeFile, and are acceptable in leu of setting them to the explicit versions.
         run: |
           go version
-          go env -w GOFLAGS=-tags=gtk_$(pkg-config --modversion gtk+-3.0 | tr -t . _ | cut -d _ -f 1-2),pango_$(pkg-config --modversion pango | tr -t . _ | cut -d _ -f 1-2),gdk_pixbuf_$(pkg-config --modversion gdk-pixbuf-2.0 | tr -t . _ | cut -d _ -f 1-2),glib_$(pkg-config --modversion glib-2.0 | tr -t . _ | cut -d _ -f 1-2)
+          go env -w GOFLAGS=-tags=gtk_3_22,glib_2_58,pango_1_42,gdk_pixbuf_2_38
           go env
       - name: GolangCI Lint
         uses: golangci/golangci-lint-action@master
