@@ -345,7 +345,6 @@ linters:
 #    - gomnd
 #    - govet
 #    - ifshort
-    - gofumpt
     - lll
 #    - misspell
 #    - nakedret
