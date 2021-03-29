@@ -15,14 +15,17 @@ jobs:
   golangci:
     name: Lint
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        go-version: [1.16.x]
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y --no-install-recommends build-essential git-buildpackage fakeroot libcairo2-dev libgtk-3-dev git devscripts gccgo gcc libc-dev
+      - name: GolangCI INIT
+        uses: golangci/golangci-lint-action@master
+        with:
+          version: v1.39.0
+          # We do this just to install golang1.16, then we set the GO ENV up prior to actually linting
+          args: --version
       - name: Configure Golang ENV
         # This ensures that the correct build flags are set for the linters.
         # To have this be the ACTUAL installed versions, use
