@@ -45,4 +45,4 @@ jobs:
           skip-go-installation: true
           only-new-issues: true
           # FIXME Only for the time being, we should comment this out once we are comfortable with it.
-          args: --out-format=json
+          args: --out-format=tab
