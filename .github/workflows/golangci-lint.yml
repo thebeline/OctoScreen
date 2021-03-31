@@ -39,10 +39,9 @@ jobs:
           go env -w GOFLAGS=-tags=gtk_3_22,glib_2_58,pango_1_42,gdk_pixbuf_2_38
           go env
       - name: GolangCI Lint
-        uses: golangci/golangci-lint-action@master
+        uses: thebeline/golangci-lint-action@d30d84ce2cd24c3defe436006672784cbb78f658
         with:
           version: v1.39.0
           skip-go-installation: true
           only-new-issues: true
-          # FIXME Only for the time being, we should comment this out once we are comfortable with it.
-          args: --issues-exit-code 0
+          allow-warnings: true
