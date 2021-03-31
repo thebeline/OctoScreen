@@ -45,4 +45,3 @@ jobs:
           skip-go-installation: true
           only-new-issues: true
           allow-warnings: true
-          args: --issues-exit-code 0
