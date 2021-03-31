@@ -448,5 +448,5 @@ severity:
   # Only affects out formats that support setting severity information.
   rules:
     - linters:
-      - dupl
-      severity: warning
+      - lll
+      severity: error
