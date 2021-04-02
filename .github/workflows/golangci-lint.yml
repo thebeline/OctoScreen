@@ -39,7 +39,7 @@ jobs:
           go env -w GOFLAGS=-tags=gtk_3_22,glib_2_58,pango_1_42,gdk_pixbuf_2_38
           go env
       - name: GolangCI Lint
-        uses: thebeline/golangci-lint-action@a3e644652f40c2b0aa7aa5c4d0012441754060cb
+        uses: thebeline/golangci-lint-action@MigratingToJsonDataHandeling
         with:
           version: v1.39.0
           skip-go-installation: true
