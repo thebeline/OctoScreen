@@ -39,7 +39,7 @@ jobs:
           go env -w GOFLAGS=-tags=gtk_3_22,glib_2_58,pango_1_42,gdk_pixbuf_2_38
           go env
       - name: GolangCI Lint
-        uses: thebeline/golangci-lint-action@92c027dbfad72584cf5d707a8d189ae3b5ed29d6
+        uses: thebeline/golangci-lint-action@a3e644652f40c2b0aa7aa5c4d0012441754060cb
         with:
           version: v1.39.0
           skip-go-installation: true
